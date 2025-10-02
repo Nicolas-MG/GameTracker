@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import statsRoutes from "./routes/statsRoutes.js";
 import gameRoutes from "./routes/gameRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 
@@ -16,6 +17,7 @@ app.use(express.json());
 // Rutas
 app.use("/api/games", gameRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/stats", statsRoutes);
 
 // Conexión DB
 mongoose.connect(process.env.MONGO_URI)

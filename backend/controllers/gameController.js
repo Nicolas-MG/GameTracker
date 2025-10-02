@@ -1,6 +1,6 @@
 import Game from "../models/Game.js";
 
-// Este es el controlador que nos permite Obtener todos los juegos
+// Este es el controlador que nos permite obtener todos los juegos
 export const getGames = async (req, res) => {
   try {
     const games = await Game.find();

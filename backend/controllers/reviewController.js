@@ -1,6 +1,6 @@
 import Review from "../models/Review.js";
 
-// Obtener reseñas de un juego
+// con este controlador podemos obtener las reseñas de un juego
 export const getReviewsByGame = async (req, res) => {
   try {
     const reviews = await Review.find({ juegoId: req.params.juegoId });
@@ -10,7 +10,7 @@ export const getReviewsByGame = async (req, res) => {
   }
 };
 
-// Crear reseña
+// con este controlador nos permite crear reseñas
 export const createReview = async (req, res) => {
   try {
     const newReview = new Review(req.body);
@@ -21,7 +21,7 @@ export const createReview = async (req, res) => {
   }
 };
 
-// Actualizar reseña
+// con este controlador podemos actualizar reseñas
 export const updateReview = async (req, res) => {
   try {
     const updatedReview = await Review.findByIdAndUpdate(
@@ -36,7 +36,7 @@ export const updateReview = async (req, res) => {
   }
 };
 
-// Eliminar reseña
+// con este controlador podemos eliminar reseñas
 export const deleteReview = async (req, res) => {
   try {
     const deletedReview = await Review.findByIdAndDelete(req.params.id);
