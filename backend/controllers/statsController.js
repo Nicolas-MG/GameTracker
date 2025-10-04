@@ -16,8 +16,10 @@ export const getStats = async (req, res) => {
     // Promedio de puntuación
     const avgRating =
       reviews.length > 0
-        ? (reviews.reduce((acc, review) => acc + (review.puntuacion || 0), 0) / reviews.length).toFixed(2)
-        : 0;
+        ? (reviews.reduce((acc, review) =>
+        acc + (review.puntuacion || 0),
+        0) / reviews.length).toFixed(2)
+        :0;
 
     res.json({
       totalGames,
