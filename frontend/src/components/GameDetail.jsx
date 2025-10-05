@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getReviews, createReview } from "../services/api";
+import { getReviews, createReview, deleteReview } from "../services/api";
 
 const GameDetail = ({ game, onClose }) => {
   const [reviews, setReviews] = useState([]);
   const [form, setForm] = useState({
-    usuario: "",
-    comentario: "",
     puntuacion: 5,
+    textoReview: "",
+    horasJugadas: "",
+    dificultad: "Normal",
+    recomendaria: true,
   });
 
   useEffect(() => {
@@ -15,19 +17,50 @@ const GameDetail = ({ game, onClose }) => {
   }, [game]);
 
   const fetchReviews = async () => {
-    const res = await getReviews(game._id);
-    setReviews(res.data);
+    try {
+      const res = await getReviews(game._id);
+      setReviews(res.data);
+    } catch (err) {
+      console.error("Error al obtener reseñas:", err);
+    }
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createReview(game._id, form);
-    setForm({ usuario: "", comentario: "", puntuacion: 5 });
-    fetchReviews();
+    try {
+      const newReview = {
+        ...form,
+        juegoId: game._id,
+        fechaCreacion: new Date(),
+        fechaActualizacion: new Date(),
+      };
+      await createReview(game._id, newReview);
+      setForm({
+        puntuacion: 5,
+        textoReview: "",
+        horasJugadas: "",
+        dificultad: "Normal",
+        recomendaria: true,
+      });
+      fetchReviews();
+    } catch (err) {
+      console.error("Error al crear reseña:", err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("¿Seguro que quieres eliminar esta reseña?")) return;
+    try {
+      await deleteReview(id);
+      setReviews(reviews.filter((rev) => rev._id !== id));
+    } catch (err) {
+      console.error("Error al eliminar reseña:", err);
+    }
   };
 
   if (!game) return null;
@@ -46,6 +79,7 @@ const GameDetail = ({ game, onClose }) => {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
         >
+          {/* Botón cerrar */}
           <button
             className="absolute top-3 right-3 text-gray-600 hover:text-black"
             onClick={onClose}
@@ -53,6 +87,7 @@ const GameDetail = ({ game, onClose }) => {
             ✖
           </button>
 
+          {/* Info del juego */}
           <div className="flex gap-4">
             <img
               src={game.imagenPortada}
@@ -69,64 +104,129 @@ const GameDetail = ({ game, onClose }) => {
                 Desarrollador: {game.desarrollador}
               </p>
               <p className="text-sm text-gray-500">
-                Año: {game.añoLanzamiento}
+                Año: {game.yearLanzamiento}
               </p>
             </div>
           </div>
 
           {/* Reseñas */}
           <h3 className="text-xl font-bold mt-6">Reseñas</h3>
-          <div className="space-y-3 mt-2 max-h-40 overflow-y-auto pr-2">
+          <div className="space-y-3 mt-2 max-h-56 overflow-y-auto pr-2">
             {reviews.length > 0 ? (
               reviews.map((rev) => (
-                <div
+                <motion.div
                   key={rev._id}
-                  className="border rounded-lg p-2 bg-gray-50"
+                  className="border rounded-lg p-3 bg-gray-50 relative"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
                 >
+                  <button
+                    onClick={() => handleDelete(rev._id)}
+                    className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                    title="Eliminar reseña"
+                  >
+                    🗑️
+                  </button>
                   <p className="font-semibold">
-                    ⭐ {rev.puntuacion} - {rev.usuario}
+                    ⭐ {rev.puntuacion} - {rev.dificultad} ({rev.horasJugadas}h)
                   </p>
-                  <p className="text-gray-700">{rev.comentario}</p>
-                </div>
+                  <p className="text-gray-700">{rev.textoReview}</p>
+                  <p className="text-sm text-gray-500">
+                    {rev.recomendaria
+                      ? "✅ Recomendado"
+                      : "❌ No lo recomendaría"}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {new Date(rev.fechaCreacion).toLocaleString()}
+                  </p>
+                </motion.div>
               ))
             ) : (
               <p className="text-gray-500">Aún no hay reseñas</p>
             )}
           </div>
 
-          {/* Formulario reseña */}
-          <form onSubmit={handleSubmit} className="mt-4 space-y-2">
-            <input
-              type="text"
-              name="usuario"
-              placeholder="Tu nombre"
-              value={form.usuario}
-              onChange={handleChange}
-              className="w-full border rounded-lg p-2"
-              required
-            />
+          {/* Formulario */}
+          <form onSubmit={handleSubmit} className="mt-6 space-y-3">
             <textarea
-              name="comentario"
-              placeholder="Tu reseña"
-              value={form.comentario}
+              name="textoReview"
+              placeholder="Escribe tu reseña..."
+              value={form.textoReview}
               onChange={handleChange}
               className="w-full border rounded-lg p-2"
               required
             />
-            <select
-              name="puntuacion"
-              value={form.puntuacion}
-              onChange={handleChange}
-              className="w-full border rounded-lg p-2"
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm text-gray-600">Puntuación</label>
+                <select
+                  name="puntuacion"
+                  value={form.puntuacion}
+                  onChange={handleChange}
+                  className="w-full border rounded-lg p-2"
+                >
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <option key={n} value={n}>
+                      {n} ⭐
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm text-gray-600">
+                  Horas jugadas
+                </label>
+                <input
+                  type="number"
+                  name="horasJugadas"
+                  value={form.horasJugadas}
+                  onChange={handleChange}
+                  placeholder="Ej: 60"
+                  className="w-full border rounded-lg p-2"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm text-gray-600">Dificultad</label>
+                <select
+                  name="dificultad"
+                  value={form.dificultad}
+                  onChange={handleChange}
+                  className="w-full border rounded-lg p-2"
+                >
+                  {["Fácil", "Normal", "Difícil"].map((dif) => (
+                    <option key={dif} value={dif}>
+                      {dif}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center gap-2 mt-5">
+                <input
+                  type="checkbox"
+                  name="recomendaria"
+                  checked={form.recomendaria}
+                  onChange={handleChange}
+                  className="w-4 h-4"
+                />
+                <label className="text-sm text-gray-600">
+                  Recomendaría este juego
+                </label>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all"
             >
-              {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>
-                  {n} ⭐
-                </option>
-              ))}
-            </select>
-            <button className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg">
-              Enviar Reseña
+              Enviar reseña
             </button>
           </form>
         </motion.div>

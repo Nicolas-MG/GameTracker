@@ -4,7 +4,7 @@ import { getReviewsByGame, createReview, updateReview, deleteReview } from "../c
 const router = express.Router();
 
 router.get("/:juegoId", getReviewsByGame);
-router.post("/", createReview);
+router.post("/:juegoId", createReview);
 router.put("/:id", updateReview);
 router.delete("/:id", deleteReview);
 

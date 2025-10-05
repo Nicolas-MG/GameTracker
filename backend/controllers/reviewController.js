@@ -13,13 +13,23 @@ export const getReviewsByGame = async (req, res) => {
 // con este controlador nos permite crear reseñas
 export const createReview = async (req, res) => {
   try {
-    const newReview = new Review(req.body);
+    const { juegoId } = req.params;
+
+    const newReview = new Review({
+      juegoId,
+      ...req.body,
+      fechaCreacion: new Date(),
+      fechaActualizacion: new Date(),
+    });
+
     await newReview.save();
     res.status(201).json(newReview);
   } catch (error) {
+    console.error("Error al crear reseña:", error);
     res.status(400).json({ message: "Error al crear reseña", error });
   }
 };
+
 
 // con este controlador podemos actualizar reseñas
 export const updateReview = async (req, res) => {
@@ -37,7 +47,7 @@ export const updateReview = async (req, res) => {
 };
 
 // con este controlador podemos eliminar reseñas
-export const deleteReview = async (req, res) => {
+export const  deleteReview = async (req, res) => {
   try {
     const deletedReview = await Review.findByIdAndDelete(req.params.id);
     if (!deletedReview) return res.status(404).json({ message: "Reseña no encontrada" });

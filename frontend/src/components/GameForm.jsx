@@ -85,6 +85,14 @@ const GameForm = ({ onGameAdded }) => {
         onChange={handleChange}
         className="w-full border rounded-lg p-2"
       />
+      <input
+        type="text"
+        name="desarrollador"
+        placeholder="Desarrolllador"
+        value={form.desarrollador}
+        onChange={handleChange}
+        className="w-full border rounded-lg p-2"
+      />
       <textarea
         name="descripcion"
         placeholder="Descripción"
