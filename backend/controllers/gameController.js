@@ -1,4 +1,6 @@
 import Game from "../models/Game.js";
+import Review from "../models/Review.js";
+
 
 // Este es el controlador que nos permite obtener todos los juegos
 export const getGames = async (req, res) => {
@@ -43,13 +45,31 @@ export const updateGame = async (req, res) => {
   }
 };
 
-// Este es el controlador que nos permite eliminar un juego
+// Este es el controlador que nos permite eliminar un juego que ademas elimina las reseñas asociadas al juego
 export const deleteGame = async (req, res) => {
   try {
-    const deletedGame = await Game.findByIdAndDelete(req.params.id);
-    if (!deletedGame) return res.status(404).json({ message: "Juego no encontrado" });
-    res.json({ message: "Juego eliminado correctamente" });
+    const { id } = req.params;
+
+    // Verificar si el juego existe
+    const game = await Game.findById(id);
+    if (!game) {
+      return res.status(404).json({ message: "Juego no encontrado" });
+    }
+
+    // Eliminar reseñas asociadas
+    const deleteResult = await Review.deleteMany({ juegoId: id });
+
+    // Eliminar juego
+    await Game.findByIdAndDelete(id);
+
+    res.json({
+      message: `Juego "${game.titulo}" y ${deleteResult.deletedCount} reseñas eliminadas correctamente 💥`,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error al eliminar juego", error });
+    console.error("❌ Error al eliminar el juego:", error);
+    res.status(500).json({
+      message: "Error al eliminar el juego y sus reseñas",
+      error: error.message,
+    });
   }
 };

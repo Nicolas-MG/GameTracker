@@ -3,11 +3,15 @@ import { motion } from "framer-motion";
 import { getGames, updateGame } from "../services/api";
 import GameDetail from "./GameDetail";
 import Filters from "./Filters";
+import EditGame from "./EditGame";
+import DeleteConfirm from "./DeleteConfirm";
 
 const GameList = () => {
   const [games, setGames] = useState([]);
   const [filteredGames, setFilteredGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
+  const [editingGame, setEditingGame] = useState(null);
+  const [deletingGame, setDeletingGame] = useState(null);
   const [filters, setFilters] = useState({
     genero: "",
     plataforma: "",
@@ -49,7 +53,7 @@ const GameList = () => {
   const toggleCompletion = async (game) => {
     try {
       await updateGame(game._id, { completado: !game.completado });
-      fetchGames(); // refresca lista
+      fetchGames();
     } catch (error) {
       console.error("Error al actualizar el estado:", error);
     }
@@ -76,7 +80,6 @@ const GameList = () => {
               className="rounded-xl h-40 w-full object-cover cursor-pointer"
               onClick={() => setSelectedGame(game)}
             />
-
             <h2 className="text-xl font-bold mt-4">{game.titulo}</h2>
             <p className="text-gray-600">
               {game.genero} • {game.plataforma}
@@ -92,21 +95,54 @@ const GameList = () => {
               {game.completado ? "Completado ✅" : "Pendiente ⏳"}
             </span>
 
-            {/* Solo muestra el botón si NO está completado */}
-            {!game.completado && (
+            <div className="mt-3 flex flex-wrap gap-2">
               <button
                 onClick={() => toggleCompletion(game)}
-                className="mt-3 px-4 py-2 rounded-lg font-medium transition-all bg-green-500 hover:bg-green-600 text-white"
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  game.completado
+                    ? "bg-yellow-500 hover:bg-yellow-600 text-white"
+                    : "bg-green-500 hover:bg-green-600 text-white"
+                }`}
               >
-                Marcar como Completado
+                {game.completado ? "Marcar como Pendiente" : "Marcar como Completado"}
               </button>
-            )}
+
+              <button
+                onClick={() => setEditingGame(game)}
+                className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium"
+              >
+                ✏️ Editar
+              </button>
+
+              <button
+                onClick={() => setDeletingGame(game)}
+                className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium"
+              >
+                🗑️ Eliminar
+              </button>
+            </div>
           </motion.div>
         ))}
       </div>
 
       {selectedGame && (
         <GameDetail game={selectedGame} onClose={() => setSelectedGame(null)} />
+      )}
+
+      {editingGame && (
+        <EditGame
+          game={editingGame}
+          onClose={() => setEditingGame(null)}
+          onSave={fetchGames}
+        />
+      )}
+
+      {deletingGame && (
+        <DeleteConfirm
+          game={deletingGame}
+          onClose={() => setDeletingGame(null)}
+          onDeleted={fetchGames}
+        />
       )}
     </div>
   );
