@@ -1,26 +1,27 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
+import GameList from "./components/Game/GameList";
 import GameForm from "./components/GameForm";
-import GameList from "./components/GameList";
 import Dashboard from "./components/Dashboard";
 
 function App() {
   const [view, setView] = useState("games");
+  const [games, setGames] = useState([]);
+
+  const handleAddGame = (newGame) => {
+    setGames([...games, newGame]);
+    setView("games");
+  };
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      {/* Header */}
-      <header className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-blue-600">🎮 GameTracker</h1>
+      <header className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">🎮 GameTracker</h1>
 
-        <nav className="flex gap-3">
+        <nav className="space-x-4">
           <button
             onClick={() => setView("games")}
-            className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-              view === "games"
-                ? "bg-blue-500 text-white shadow-md"
-                : "bg-gray-200 hover:bg-gray-300"
+            className={`px-4 py-2 rounded-lg ${
+              view === "games" ? "bg-blue-500 text-white" : "bg-gray-200"
             }`}
           >
             Juegos
@@ -28,45 +29,31 @@ function App() {
 
           <button
             onClick={() => setView("dashboard")}
-            className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-              view === "dashboard"
-                ? "bg-blue-500 text-white shadow-md"
-                : "bg-gray-200 hover:bg-gray-300"
+            className={`px-4 py-2 rounded-lg ${
+              view === "dashboard" ? "bg-blue-500 text-white" : "bg-gray-200"
             }`}
           >
             Dashboard
           </button>
+
+          {/* ✅ Botón para abrir el formulario */}
+          <button
+            onClick={() => setView("addGame")}
+            className={`px-4 py-2 rounded-lg ${
+              view === "addGame" ? "bg-green-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            ➕ Agregar Juego
+          </button>
         </nav>
       </header>
 
-      {/* Contenido dinámico */}
-      <AnimatePresence mode="wait">
-        {view === "games" && (
-          <motion.div
-            key="games"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4 }}
-          >
-            <GameList />
-            <GameForm onGameAdded={() => setRefresh(!refresh)} />
-          </motion.div>
-        )}
-
-        {view === "dashboard" && (
-          <motion.div
-            key="dashboard"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4 }}
-          >
-            <Dashboard />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
+      {/* ✅ Renderizamos las vistas */}
+      {view === "games" && <GameList games={games} />}
+      {view === "dashboard" && <Dashboard />}
+      {view === "addGame" && (
+        <GameForm onSave={handleAddGame} onCancel={() => setView("games")} />
+      )}
     </div>
   );
 }
