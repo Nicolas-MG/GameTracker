@@ -1,9 +1,12 @@
 import express from "express";
-import { getReviewsByGame, createReview, updateReview, deleteReview } from "../controllers/reviewController.js";
+import { getReviewsByGame, createReview, updateReview, deleteReview, getAllReviews } from "../controllers/reviewController.js";
 
 const router = express.Router();
 
 // RUTAS PARA MANEJAR LAS RESEÑAS
+
+// Obtener todas las reseñas
+router.get("/", getAllReviews);
 
 // Obtener todas las reseñas de un juego
 router.get("/:juegoId", getReviewsByGame);

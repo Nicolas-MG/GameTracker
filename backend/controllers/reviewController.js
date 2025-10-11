@@ -1,5 +1,16 @@
 import Review from "../models/Review.js";
 
+
+// Con este controlador podemos obtener todas las reseñas
+export const getAllReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find().populate("juegoId", "titulo genero plataforma");
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener reseñas", error });
+  }
+};
+
 // con este controlador podemos obtener las reseñas de un juego
 export const getReviewsByGame = async (req, res) => {
   try {

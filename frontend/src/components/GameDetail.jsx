@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getReviews, createReview, deleteReview } from "../services/api";
+import { getReviews, createReview, deleteReview, updateReview } from "../services/api";
 
 const GameDetail = ({ game, onClose }) => {
   const [reviews, setReviews] = useState([]);
+  const [editingReview, setEditingReview] = useState(null);
   const [form, setForm] = useState({
     puntuacion: 5,
     textoReview: "",
@@ -33,13 +34,21 @@ const GameDetail = ({ game, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newReview = {
-        ...form,
-        juegoId: game._id,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
-      };
-      await createReview(game._id, newReview);
+      if (editingReview) {
+        // 🔁 Actualizar reseña existente
+        await updateReview(editingReview._id, { ...form, fechaActualizacion: new Date() });
+        setEditingReview(null);
+      } else {
+        // ➕ Crear nueva reseña
+        const newReview = {
+          ...form,
+          juegoId: game._id,
+          fechaCreacion: new Date(),
+          fechaActualizacion: new Date(),
+        };
+        await createReview(game._id, newReview);
+      }
+
       setForm({
         puntuacion: 5,
         textoReview: "",
@@ -47,9 +56,10 @@ const GameDetail = ({ game, onClose }) => {
         dificultad: "Normal",
         recomendaria: true,
       });
+
       fetchReviews();
     } catch (err) {
-      console.error("Error al crear reseña:", err);
+      console.error("Error al guardar reseña:", err);
     }
   };
 
@@ -61,6 +71,17 @@ const GameDetail = ({ game, onClose }) => {
     } catch (err) {
       console.error("Error al eliminar reseña:", err);
     }
+  };
+
+  const handleEdit = (review) => {
+    setEditingReview(review);
+    setForm({
+      puntuacion: review.puntuacion,
+      textoReview: review.textoReview,
+      horasJugadas: review.horasJugadas,
+      dificultad: review.dificultad,
+      recomendaria: review.recomendaria,
+    });
   };
 
   if (!game) return null;
@@ -121,21 +142,31 @@ const GameDetail = ({ game, onClose }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                 >
-                  <button
-                    onClick={() => handleDelete(rev._id)}
-                    className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                    title="Eliminar reseña"
-                  >
-                    🗑️
-                  </button>
+                  {/* Botones */}
+                  <div className="absolute top-2 right-2 flex gap-2">
+                    <button
+                      onClick={() => handleEdit(rev)}
+                      className="text-blue-500 hover:text-blue-700"
+                      title="Editar reseña"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      onClick={() => handleDelete(rev._id)}
+                      className="text-red-500 hover:text-red-700"
+                      title="Eliminar reseña"
+                    >
+                      🗑️
+                    </button>
+                  </div>
+
+                  {/* Info */}
                   <p className="font-semibold">
                     ⭐ {rev.puntuacion} - {rev.dificultad} ({rev.horasJugadas}h)
                   </p>
                   <p className="text-gray-700">{rev.textoReview}</p>
                   <p className="text-sm text-gray-500">
-                    {rev.recomendaria
-                      ? "✅ Recomendado"
-                      : "❌ No lo recomendaría"}
+                    {rev.recomendaria ? "✅ Recomendado" : "❌ No recomendado"}
                   </p>
                   <p className="text-xs text-gray-400 mt-1">
                     {new Date(rev.fechaCreacion).toLocaleString()}
@@ -147,8 +178,12 @@ const GameDetail = ({ game, onClose }) => {
             )}
           </div>
 
-          {/* Formulario */}
+          {/* Formulario de crear/editar */}
           <form onSubmit={handleSubmit} className="mt-6 space-y-3">
+            <h4 className="font-semibold">
+              {editingReview ? "✏️ Editar reseña" : "📝 Nueva reseña"}
+            </h4>
+
             <textarea
               name="textoReview"
               placeholder="Escribe tu reseña..."
@@ -176,9 +211,7 @@ const GameDetail = ({ game, onClose }) => {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-600">
-                  Horas jugadas
-                </label>
+                <label className="block text-sm text-gray-600">Horas jugadas</label>
                 <input
                   type="number"
                   name="horasJugadas"
@@ -224,9 +257,11 @@ const GameDetail = ({ game, onClose }) => {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all"
+              className={`w-full ${
+                editingReview ? "bg-emerald-500 hover:bg-emerald-600" : "bg-blue-500 hover:bg-blue-600"
+              } text-white py-2 px-4 rounded-lg transition-all`}
             >
-              Enviar reseña
+              {editingReview ? "Guardar cambios" : "Enviar reseña"}
             </button>
           </form>
         </motion.div>

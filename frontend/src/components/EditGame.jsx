@@ -1,4 +1,3 @@
-// src/components/EditGame.jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { updateGame } from "../services/api";
