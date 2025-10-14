@@ -36,7 +36,7 @@ function App() {
             Dashboard
           </button>
 
-          {/* ✅ Botón para abrir el formulario */}
+          {/* Con este botón se abre el formulario */}
           <button
             onClick={() => setView("addGame")}
             className={`px-4 py-2 rounded-lg ${
@@ -48,7 +48,7 @@ function App() {
         </nav>
       </header>
 
-      {/* ✅ Renderizamos las vistas */}
+      {/* Aca Renderizamos las vistas */}
       {view === "games" && <GameList games={games} />}
       {view === "dashboard" && <Dashboard />}
       {view === "addGame" && (

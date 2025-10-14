@@ -5,12 +5,17 @@ const API = axios.create({
 });
 
 // Games
+// Este nos permite obtener todas los Games
 export const getGames = () => API.get("/games");
+
+// Este nos permite crear un nuevo Games
 export const createGame = (game) => API.post("/games", game);
+
+// Este nos permite obtener un Games con un id especifico
 export const updateGame = (id, data) => API.put(`/games/${id}`, data);
+
+// Este nos permite eliminar un Game con un id especifico
 export const deleteGame = (id) => API.delete(`/games/${id}`);
-
-
 
 
 
