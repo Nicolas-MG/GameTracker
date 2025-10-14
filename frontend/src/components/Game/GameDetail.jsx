@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getReviews, createReview, deleteReview, updateReview } from "../services/api";
+import { getReviews, createReview, deleteReview, updateReview } from "../../services/api";
 
 const GameDetail = ({ game, onClose }) => {
   const [reviews, setReviews] = useState([]);

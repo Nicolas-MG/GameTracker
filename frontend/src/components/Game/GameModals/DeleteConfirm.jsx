@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { deleteGame } from "../services/api";
+import { deleteGame } from "../../../services/api";
 
 const DeleteConfirm = ({ game, onClose, onDeleted }) => {
   const handleDelete = async () => {

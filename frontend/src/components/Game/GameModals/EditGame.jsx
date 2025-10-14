@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { updateGame } from "../services/api";
+import { updateGame } from "../../../services/api";
 
 const EditGame = ({ game, onClose, onSave }) => {
   const [form, setForm] = useState({

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { createGame } from "../services/api";
+import { createGame } from "../../services/api";
 
 const GameForm = ({ onGameAdded }) => {
   const [form, setForm] = useState({

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import GameList from "./components/Game/GameList";
-import GameForm from "./components/GameForm";
-import Dashboard from "./components/Dashboard";
+import GameForm from "./components/Game/GameForm";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   const [view, setView] = useState("games");

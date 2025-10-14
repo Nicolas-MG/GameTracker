@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { getStats, getGames } from "../services/api";
+import { getStats, getGames } from "../../services/api";
 import { motion } from "framer-motion";
-import SummaryCard from "./Dashboard/SummaryCard";
-import GenrePieChart from "./Dashboard/GenrePieChart";
-import PlatformBarChart from "./Dashboard/PlatformBarChart";
-import CompletionPieChart from "./Dashboard/CompletionPieChart";
-import HoursBarChart from "./Dashboard/HoursBarChart";
-import RatingBarChart from "./Dashboard/RatingBarChart";
-import MonthLineChart from "./Dashboard/MonthLineChart";
+import SummaryCard from "../Dashboard/SummaryCard";
+import GenrePieChart from "../Dashboard/GenrePieChart";
+import PlatformBarChart from "../Dashboard/PlatformBarChart";
+import CompletionPieChart from "../Dashboard/CompletionPieChart";
+import HoursBarChart from "../Dashboard/HoursBarChart";
+import RatingBarChart from "../Dashboard/RatingBarChart";
+import MonthLineChart from "../Dashboard/MonthLineChart";
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
