@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import GameCard from "./GameCard";
-import './GameGrid.css';  
+import './GameGrid.css';
 
 const GameGrid = ({ games, onToggle, onSelect, onEdit, onDelete }) => (
   <motion.div layout className="game-grid">

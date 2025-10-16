@@ -1,4 +1,5 @@
-.modal-overlay {
+/* Modal */
+.modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,8 +12,7 @@
   z-index: 50;
 }
 
-
-.game-detail-container {
+.gameDetailContainer {
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -34,8 +34,7 @@
   }
 }
 
-
-.close-button {
+.closeButton {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -44,70 +43,70 @@
   cursor: pointer;
 }
 
-.close-button:hover {
+.closeButton:hover {
   color: black;
 }
 
-
-.game-info {
+/* Game Info */
+.gameInfo {
   display: flex;
   gap: 16px;
 }
 
-.game-image {
+.gameImage {
   width: 160px;
   height: 160px;
   object-fit: cover;
   border-radius: 8px;
 }
 
-.game-title {
+.gameTitle {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-.game-meta {
+.gameMeta {
   color: #666;
 }
 
-.game-description {
+.gameDescription {
   margin-top: 8px;
 }
 
-.game-developer,
-.game-year {
+.gameDeveloper,
+.gameYear {
   font-size: 0.875rem;
   color: #888;
 }
 
 /* Reseñas */
-.reviews-title {
+.reviewsTitle {
   font-size: 1.25rem;
   font-weight: bold;
   margin-top: 24px;
 }
 
-.reviews-container {
+.reviewsContainer {
   margin-top: 12px;
   max-height: 250px;
   overflow-y: auto;
   padding-right: 8px;
 }
 
-.review-card {
+.reviewCard {
   position: relative;
   padding: 16px;
-  background-color: #f9f9f9;
+  background-color: #dadada;
   border-radius: 8px;
   margin-bottom: 12px;
   transition: all 0.3s;
 }
 
-.review-card:hover {
+.reviewCard:hover {
   background-color: #f1f1f1;
 }
 
-.review-buttons {
+.reviewButtons {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -115,49 +114,49 @@
   gap: 8px;
 }
 
-.edit-button,
-.delete-button {
+.editButton,
+.deleteButton {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 16px;
 }
 
-.review-info {
+.reviewInfo {
   font-weight: bold;
 }
 
-.review-text {
+.reviewText {
   margin-top: 8px;
 }
 
-.review-recommendation {
+.reviewRecommendation {
   margin-top: 8px;
   font-size: 0.875rem;
 }
 
-.review-date {
+.reviewDate {
   margin-top: 4px;
   font-size: 0.75rem;
-  color: #888;
+  color: #837d7d;
 }
 
-.no-reviews {
-  color: #888;
+.noReviews {
+  color: #a09090;
   font-size: 1rem;
 }
 
 /* Formulario */
-.review-form {
+.reviewForm {
   margin-top: 24px;
 }
 
-.form-title {
+.formTitle {
   font-weight: bold;
   font-size: 1.125rem;
 }
 
-.review-textarea {
+.reviewTextarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ddd;
@@ -165,37 +164,41 @@
   resize: vertical;
 }
 
-.form-fields {
+.formFields {
   display: flex;
   gap: 16px;
   margin-top: 16px;
 }
 
-.form-label {
+.formLabel {
   font-size: 0.875rem;
   color: #666;
 }
 
-.form-select,
-.form-input {
+.formSelect,
+.formInput {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
 }
 
-.checkbox-container {
+.checkboxContainer {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 8px;
 }
 
-.checkbox-label {
+.checkbox {
+  cursor: pointer;
+}
+
+.checkboxLabel {
   font-size: 0.875rem;
 }
 
-.submit-button {
+.submitButton {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
@@ -206,18 +209,18 @@
   transition: all 0.3s;
 }
 
-.submit-button.new {
+.submitButton.new {
   background-color: #007bff;
 }
 
-.submit-button.new:hover {
+.submitButton.new:hover {
   background-color: #0056b3;
 }
 
-.submit-button.editing {
+.submitButton.editing {
   background-color: #28a745;
 }
 
-.submit-button.editing:hover {
+.submitButton.editing:hover {
   background-color: #218838;
 }

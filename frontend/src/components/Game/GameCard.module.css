@@ -1,0 +1,114 @@
+.game-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Contenedor de imagen */
+  .game-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 133%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #384fb8 0%, #0d0911 100%);
+    cursor: pointer;
+  }
+
+.game-image {
+    position: absolute;
+  top: 50%; /* Centrado vertical */
+  left: 50%; /* Centrado horizontal */
+  transform: translate(-50%, -50%); /* Centra la imagen */
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Muestra la imagen completa */
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.game-card:hover .game-image {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* Badge de estado sobre la imagen */
+.game-status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.game-status-badge.completed {
+  background: rgba(16, 185, 129, 0.9);
+  color: white;
+}
+
+.game-status-badge.pending {
+  background: rgba(245, 158, 11, 0.9);
+  color: white;
+}
+
+/* Contenido de la tarjeta */
+.game-content {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Metadata con iconos */
+.game-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.game-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+  
+.game-meta-item::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: #9ca3af;
+  border-radius: 50%;
+}

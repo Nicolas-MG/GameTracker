@@ -1,82 +1,257 @@
 .game-form {
-  background-color: white;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 
+    0 0 40px rgba(0, 255, 255, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   max-width: 600px;
   margin: auto;
-  animation: formAnimation 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(0, 255, 255, 0.2);
+  animation: formAnimation 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Efecto de brillo animado en el borde */
+.game-form::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #00ffff, #ff00ff, #00ffff, #ff00ff);
+  border-radius: 20px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: borderGlow 3s linear infinite;
+  background-size: 300% 300%;
+}
+
+.game-form:hover::before {
+  opacity: 0.5;
+}
+
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 @keyframes formAnimation {
   from {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-50px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-
+/* Título con efecto neón */
 .form-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 900;
   text-align: center;
+  background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: gradientText 3s ease infinite;
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  position: relative;
 }
 
+.form-title::after {
+  content: '🎮';
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: float 2s ease-in-out infinite;
+}
 
+@keyframes gradientText {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-50%) translateX(5px); }
+}
+
+/* Inputs con estilo gamer */
 .input-field,
 .input-textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-radius: 12px;
   font-size: 1rem;
+  color: #ffffff;
   margin-top: 8px;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  backdrop-filter: blur(10px);
 }
 
+.input-field::placeholder,
+.input-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.input-field:focus,
+.input-textarea:focus {
+  outline: none;
+  border-color: #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.3),
+    inset 0 0 20px rgba(0, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
 
 .input-textarea {
   height: 120px;
   resize: vertical;
+  min-height: 80px;
+  max-height: 200px;
 }
 
-
+/* Botón submit épico */
 .submit-button {
-  background-color: #007bff;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #00ffff 0%, #ff00ff 100%);
+  color: #000000;
+  padding: 16px;
+  border-radius: 12px;
   font-size: 1.125rem;
-  font-weight: bold;
+  font-weight: 900;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 20px rgba(0, 255, 255, 0.3),
+    0 0 30px rgba(255, 0, 255, 0.2);
+}
+
+.submit-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent);
+  transition: left 0.5s;
+}
+
+.submit-button:hover::before {
+  left: 100%;
 }
 
 .submit-button:hover {
-  background-color: #0056b3;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 12px 30px rgba(0, 255, 255, 0.4),
+    0 0 50px rgba(255, 0, 255, 0.3);
 }
 
+.submit-button:active {
+  transform: translateY(-1px) scale(0.98);
+}
 
+/* Etiquetas de los campos */
+label {
+  color: #00ffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Select con estilo gamer */
+select.input-field {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300ffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+  appearance: none;
+}
+
+/* Checkbox personalizado */
+input[type="checkbox"] {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(0, 255, 255, 0.5);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #00ffff, #ff00ff);
+  border-color: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
   .game-form {
-    padding: 16px;
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+  }
+
+  .form-title::after {
+    right: -30px;
   }
 
   .input-field,
   .input-textarea {
-    padding: 10px;
+    padding: 12px;
   }
 
   .submit-button {
     font-size: 1rem;
-    padding: 10px;
+    padding: 14px;
   }
 }

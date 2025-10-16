@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getReviews, createReview, deleteReview, updateReview } from "../../services/api";
-import './GameDetail.css';
+import styles from './GameDetail.module.css';
 
 const GameDetail = ({ game, onClose }) => {
   const [reviews, setReviews] = useState([]);
@@ -88,68 +88,68 @@ const GameDetail = ({ game, onClose }) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="modal-overlay"
+        className={styles.modalOverlay}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="game-detail-container"
+          className={styles.gameDetailContainer}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
         >
           {/* Botón cerrar */}
-          <button className="close-button" onClick={onClose}>
+          <button className={styles.closeButton} onClick={onClose}>
             ✖
           </button>
 
           {/* Info del juego */}
-          <div className="game-info">
+          <div className={styles.gameInfo}>
             <img
               src={game.imagenPortada}
               alt={game.titulo}
-              className="game-image"
+              className={styles.gameImage}
             />
             <div>
-              <h2 className="game-title">{game.titulo}</h2>
-              <p className="game-meta">
+              <h2 className={styles.gameTitle}>{game.titulo}</h2>
+              <p className={styles.gameMeta}>
                 {game.genero} • {game.plataforma}
               </p>
-              <p className="game-description">{game.descripcion}</p>
-              <p className="game-developer">
+              <p className={styles.gameDescription}>{game.descripcion}</p>
+              <p className={styles.gameDeveloper}>
                 Desarrollador: {game.desarrollador}
               </p>
-              <p className="game-year">
+              <p className={styles.gameYear}>
                 Año: {game.yearLanzamiento}
               </p>
             </div>
           </div>
 
           {/* Reseñas */}
-          <h3 className="reviews-title">Reseñas</h3>
-          <div className="reviews-container">
+          <h3 className={styles.reviewsTitle}>Reseñas</h3>
+          <div className={styles.reviewsContainer}>
             {reviews.length > 0 ? (
               reviews.map((rev) => (
                 <motion.div
                   key={rev._id}
-                  className="review-card"
+                  className={styles.reviewCard}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                 >
                   {/* Botones */}
-                  <div className="review-buttons">
+                  <div className={styles.reviewButtons}>
                     <button
                       onClick={() => handleEdit(rev)}
-                      className="edit-button"
+                      className={styles.editButton}
                       title="Editar reseña"
                     >
                       ✏️
                     </button>
                     <button
                       onClick={() => handleDelete(rev._id)}
-                      className="delete-button"
+                      className={styles.deleteButton}
                       title="Eliminar reseña"
                     >
                       🗑️
@@ -157,26 +157,26 @@ const GameDetail = ({ game, onClose }) => {
                   </div>
 
                   {/* Info */}
-                  <p className="review-info">
+                  <p className={styles.reviewInfo}>
                     ⭐ {rev.puntuacion} - {rev.dificultad} ({rev.horasJugadas}h)
                   </p>
-                  <p className="review-text">{rev.textoReview}</p>
-                  <p className="review-recommendation">
+                  <p className={styles.reviewText}>{rev.textoReview}</p>
+                  <p className={styles.reviewRecommendation}>
                     {rev.recomendaria ? "✅ Recomendado" : "❌ No recomendado"}
                   </p>
-                  <p className="review-date">
+                  <p className={styles.reviewDate}>
                     {new Date(rev.fechaCreacion).toLocaleString()}
                   </p>
                 </motion.div>
               ))
             ) : (
-              <p className="no-reviews">Aún no hay reseñas</p>
+              <p className={styles.noReviews}>Aún no hay reseñas</p>
             )}
           </div>
 
           {/* Formulario de crear/editar */}
-          <form onSubmit={handleSubmit} className="review-form">
-            <h4 className="form-title">
+          <form onSubmit={handleSubmit} className={styles.reviewForm}>
+            <h4 className={styles.formTitle}>
               {editingReview ? "✏️ Editar reseña" : "📝 Nueva reseña"}
             </h4>
 
@@ -185,18 +185,18 @@ const GameDetail = ({ game, onClose }) => {
               placeholder="Escribe tu reseña..."
               value={form.textoReview}
               onChange={handleChange}
-              className="review-textarea"
+              className={styles.reviewTextarea}
               required
             />
 
-            <div className="form-fields">
+            <div className={styles.formFields}>
               <div>
-                <label className="form-label">Puntuación</label>
+                <label className={styles.formLabel}>Puntuación</label>
                 <select
                   name="puntuacion"
                   value={form.puntuacion}
                   onChange={handleChange}
-                  className="form-select"
+                  className={styles.formSelect}
                 >
                   {[1, 2, 3, 4, 5].map((n) => (
                     <option key={n} value={n}>
@@ -207,27 +207,27 @@ const GameDetail = ({ game, onClose }) => {
               </div>
 
               <div>
-                <label className="form-label">Horas jugadas</label>
+                <label className={styles.formLabel}>Horas jugadas</label>
                 <input
                   type="number"
                   name="horasJugadas"
                   value={form.horasJugadas}
                   onChange={handleChange}
                   placeholder="Ej: 60"
-                  className="form-input"
+                  className={styles.formInput}
                   required
                 />
               </div>
             </div>
 
-            <div className="form-fields">
+            <div className={styles.formFields}>
               <div>
-                <label className="form-label">Dificultad</label>
+                <label className={styles.formLabel}>Dificultad</label>
                 <select
                   name="dificultad"
                   value={form.dificultad}
                   onChange={handleChange}
-                  className="form-select"
+                  className={styles.formSelect}
                 >
                   {["Fácil", "Normal", "Difícil"].map((dif) => (
                     <option key={dif} value={dif}>
@@ -237,21 +237,21 @@ const GameDetail = ({ game, onClose }) => {
                 </select>
               </div>
 
-              <div className="checkbox-container">
+              <div className={styles.checkboxContainer}>
                 <input
                   type="checkbox"
                   name="recomendaria"
                   checked={form.recomendaria}
                   onChange={handleChange}
-                  className="checkbox"
+                  className={styles.checkbox}
                 />
-                <label className="checkbox-label">Recomendaría este juego</label>
+                <label className={styles.checkboxLabel}>Recomendaría este juego</label>
               </div>
             </div>
 
             <button
               type="submit"
-              className={`submit-button ${editingReview ? "editing" : "new"}`}
+              className={`${styles.submitButton} ${editingReview ? styles.editing : styles.new}`}
             >
               {editingReview ? "Guardar cambios" : "Enviar reseña"}
             </button>
