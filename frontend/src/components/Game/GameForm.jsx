@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { createGame } from "../../services/api";
+import './GameForm.css';
 
 const GameForm = ({ onGameAdded }) => {
   const [form, setForm] = useState({
@@ -37,18 +38,18 @@ const GameForm = ({ onGameAdded }) => {
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="bg-white shadow-lg p-6 rounded-2xl space-y-4"
+      className="game-form"
       initial={{ opacity: 0, y: -30 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <h2 className="text-2xl font-bold">Agregar Juego</h2>
+      <h2 className="form-title">Agregar Juego</h2>
       <input
         type="text"
         name="titulo"
         placeholder="Título"
         value={form.titulo}
         onChange={handleChange}
-        className="w-full border rounded-lg p-2"
+        className="input-field"
         required
       />
       <input
@@ -57,7 +58,7 @@ const GameForm = ({ onGameAdded }) => {
         placeholder="Género"
         value={form.genero}
         onChange={handleChange}
-        className="w-full border rounded-lg p-2"
+        className="input-field"
         required
       />
       <input
@@ -66,7 +67,7 @@ const GameForm = ({ onGameAdded }) => {
         placeholder="Plataforma"
         value={form.plataforma}
         onChange={handleChange}
-        className="w-full border rounded-lg p-2"
+        className="input-field"
         required
       />
       <input
@@ -75,7 +76,7 @@ const GameForm = ({ onGameAdded }) => {
         placeholder="Año de lanzamiento"
         value={form.yearLanzamiento}
         onChange={handleChange}
-        className="w-full border rounded-lg p-2"
+        className="input-field"
       />
       <input
         type="text"
@@ -83,26 +84,24 @@ const GameForm = ({ onGameAdded }) => {
         placeholder="URL Imagen"
         value={form.imagenPortada}
         onChange={handleChange}
-        className="w-full border rounded-lg p-2"
+        className="input-field"
       />
       <input
         type="text"
         name="desarrollador"
-        placeholder="Desarrolllador"
+        placeholder="Desarrollador"
         value={form.desarrollador}
         onChange={handleChange}
-        className="w-full border rounded-lg p-2"
+        className="input-field"
       />
       <textarea
         name="descripcion"
         placeholder="Descripción"
         value={form.descripcion}
         onChange={handleChange}
-        className="w-full border rounded-lg p-2"
+        className="input-textarea"
       />
-      <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg">
-        Guardar
-      </button>
+      <button className="submit-button">Guardar</button>
     </motion.form>
   );
 };

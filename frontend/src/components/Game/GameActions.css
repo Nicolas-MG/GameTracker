@@ -1,0 +1,58 @@
+.game-actions-container {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+
+.action-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+.completed {
+  background-color: #4caf50;
+  color: white;
+}
+
+.completed:hover {
+  background-color: #388e3c;
+  transform: scale(1.05);
+}
+
+
+.pending {
+  background-color: #ff9800;
+  color: white;
+}
+
+.pending:hover {
+  background-color: #f57c00;
+  transform: scale(1.05);
+}
+
+.edit {
+  background-color: #2196f3;
+  color: white;
+}
+
+.edit:hover {
+  background-color: #1976d2;
+  transform: scale(1.05);
+}
+
+.delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}

@@ -1,10 +1,12 @@
+import './GameActions.css';
+
 const GameActions = ({ game, onToggle, onEdit, onDelete }) => {
   return (
-    <div className="mt-3 flex flex-wrap gap-2">
+    <div className="game-actions-container">
       {!game.completado && (
         <button
           onClick={() => onToggle(game)}
-          className="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium"
+          className="action-btn completed"
         >
           Marcar como Completado
         </button>
@@ -13,7 +15,7 @@ const GameActions = ({ game, onToggle, onEdit, onDelete }) => {
       {game.completado && (
         <button
           onClick={() => onToggle(game)}
-          className="px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-medium"
+          className="action-btn pending"
         >
           Marcar como Pendiente
         </button>
@@ -21,7 +23,7 @@ const GameActions = ({ game, onToggle, onEdit, onDelete }) => {
 
       <button
         onClick={onEdit}
-        className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium"
+        className="action-btn edit"
       >
         ✏️ Editar
       </button>
@@ -29,7 +31,7 @@ const GameActions = ({ game, onToggle, onEdit, onDelete }) => {
       {!game.completado && (
         <button
           onClick={onDelete}
-          className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium"
+          className="action-btn delete"
         >
           🗑️ Eliminar
         </button>

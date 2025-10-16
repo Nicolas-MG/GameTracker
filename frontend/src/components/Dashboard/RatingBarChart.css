@@ -1,0 +1,31 @@
+.rating-barchart-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+
+.rating-barchart-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+
+.recharts-tooltip-wrapper {
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 8px;
+}
+
+
+.recharts-bar-rectangle {
+  border-radius: 8px;
+}

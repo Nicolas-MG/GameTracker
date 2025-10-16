@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import GameCard from "./GameCard";
+import './GameGrid.css';  
 
 const GameGrid = ({ games, onToggle, onSelect, onEdit, onDelete }) => (
-  <motion.div layout className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+  <motion.div layout className="game-grid">
     {games.length > 0 ? (
       games.map((game, index) => (
         <motion.div
@@ -10,6 +11,7 @@ const GameGrid = ({ games, onToggle, onSelect, onEdit, onDelete }) => (
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: index * 0.05 }}
+          className="game-grid-item"
         >
           <GameCard
             game={game}
@@ -21,9 +23,7 @@ const GameGrid = ({ games, onToggle, onSelect, onEdit, onDelete }) => (
         </motion.div>
       ))
     ) : (
-      <p className="text-gray-500 text-center col-span-full">
-        No se encontraron juegos que coincidan.
-      </p>
+      <p className="no-games-message">No se encontraron juegos que coincidan.</p>
     )}
   </motion.div>
 );

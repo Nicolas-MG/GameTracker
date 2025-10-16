@@ -1,8 +1,9 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import './HoursBarChart.css';
 
 const HoursBarChart = ({ hoursChart }) => (
-  <div className="bg-white rounded-xl shadow-md p-4">
-    <h3 className="text-lg font-bold mb-2">Horas Jugadas por Género</h3>
+  <div className="hours-barchart-container">
+    <h3 className="hours-barchart-title">Horas Jugadas por Género</h3>
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={hoursChart}>
         <CartesianGrid strokeDasharray="3 3" />

@@ -1,52 +1,67 @@
 import { motion } from "framer-motion";
-import GameActions from "./GameActions";
+import './GameCard.css';
 
 const GameCard = ({ game, onToggle, onSelect, onEdit, onDelete }) => {
   return (
     <motion.div
-      whileHover={{
-        scale: 1.03,
-        rotateY: 5,
-        boxShadow: "0 15px 25px rgba(0,0,0,0.1)",
-      }}
-      whileTap={{ scale: 0.97 }}
-      className="bg-white shadow-lg rounded-2xl p-4 flex flex-col hover:shadow-xl transition-transform duration-300 cursor-pointer"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -8 }}
+      className="game-card"
     >
-      {/* Imagen */}
-      <motion.img
-        src={game.imagenPortada}
-        alt={game.titulo}
-        className="rounded-xl h-48 w-full object-cover"
-        onClick={onSelect}
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.3 }}
-      />
-
-      {/* Info */}
-      <div className="mt-4">
-        <h2 className="text-xl font-bold">{game.titulo}</h2>
-        <p className="text-gray-600 text-sm">
-          {game.genero} • {game.plataforma}
-        </p>
-
-        <span
-          className={`mt-2 inline-block px-2 py-1 rounded text-sm font-medium ${
-            game.completado
-              ? "bg-green-100 text-green-700"
-              : "bg-yellow-100 text-yellow-700"
-          }`}
-        >
-          {game.completado ? "Completado ✅" : "Pendiente ⏳"}
-        </span>
+      {/* Imagen con badge de estado superpuesto */}
+      <div className="game-image-container" onClick={onSelect}>
+        <img
+          src={game.imagenPortada}
+          alt={game.titulo}
+          className="game-image"
+          loading="lazy"
+        />
+        <div className={`game-status-badge ${game.completado ? "completed" : "pending"}`}>
+          {game.completado ? "✓ COMPLETADO" : "⏳ PENDIENTE"}
+        </div>
       </div>
 
-      {/* Botones */}
-      <GameActions
-        game={game}
-        onToggle={onToggle}
-        onEdit={onEdit}
-        onDelete={onDelete}
-      />
+      {/* Contenido de la tarjeta */}
+      <div className="game-content">
+        <h2 className="game-title">{game.titulo}</h2>
+        
+        <div className="game-meta">
+          <div className="game-meta-item">
+            🎮 {game.genero}
+          </div>
+          <div className="game-meta-item">
+            {game.plataforma}
+          </div>
+        </div>
+
+        {/* Botones de acción */}
+        <div className="game-actions">
+          <button
+            onClick={onToggle}
+            className={`btn-toggle ${game.completado ? "completed" : ""}`}
+            title={game.completado ? "Marcar como pendiente" : "Marcar como completado"}
+          >
+            {game.completado ? "⏳" : "✓"}
+          </button>
+
+          <button
+            onClick={onEdit}
+            className="btn-edit"
+            title="Editar juego"
+          >
+            ✏️
+          </button>
+
+          <button
+            onClick={onDelete}
+            className="btn-delete"
+            title="Eliminar juego"
+          >
+            🗑️
+          </button>
+        </div>
+      </div>
     </motion.div>
   );
 };

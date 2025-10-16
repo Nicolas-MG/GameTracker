@@ -1,11 +1,12 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import './GenrePieChart.css';
 
 const GenrePieChart = ({ genreChart }) => {
   const COLORS = ["#4CAF50", "#2196F3", "#FF9800", "#E91E63", "#9C27B0", "#00BCD4"];
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-4">
-      <h3 className="text-lg font-bold mb-2">Juegos por Género</h3>
+    <div className="genre-piechart-container">
+      <h3 className="genre-piechart-title">Juegos por Género</h3>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie

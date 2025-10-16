@@ -1,11 +1,12 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import './CompletionPieChart.css';
 
 const CompletionPieChart = ({ completionChart }) => {
   const COLORS = ["#4CAF50", "#E91E63"];
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-4">
-      <h3 className="text-lg font-bold mb-2">Completados vs Pendientes</h3>
+    <div className="completion-piechart-container">
+      <h3 className="completion-title">Completados vs Pendientes</h3>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie

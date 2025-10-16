@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { updateGame } from "../../../services/api";
+import "./EditGame.css";
 
 const EditGame = ({ game, onClose, onSave }) => {
   const [form, setForm] = useState({
@@ -27,45 +28,46 @@ const EditGame = ({ game, onClose, onSave }) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        className="modal-overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-white rounded-2xl shadow-lg max-w-lg w-full p-6 relative"
+          className="modal-content"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
         >
           <button
-            className="absolute top-3 right-3 text-gray-600 hover:text-black"
+            className="close-button"
             onClick={onClose}
           >
             ✖
           </button>
 
-          <h2 className="text-2xl font-bold mb-4">Editar Juego</h2>
+          <h2 className="modal-title">Editar Juego</h2>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             {Object.keys(form).map((key) => (
               <div key={key}>
-                <label className="block text-sm font-medium text-gray-700 capitalize">
+                <label className="modal-label" htmlFor={key}>
                   {key}
                 </label>
                 <input
                   type="text"
                   name={key}
+                  id={key}
                   value={form[key]}
                   onChange={handleChange}
-                  className="w-full border rounded-lg p-2 mt-1"
+                  className="modal-input"
                 />
               </div>
             ))}
 
             <button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg mt-2"
+              className="modal-button"
             >
               Guardar Cambios
             </button>

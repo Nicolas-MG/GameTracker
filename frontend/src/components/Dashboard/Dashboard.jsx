@@ -8,6 +8,7 @@ import CompletionPieChart from "../Dashboard/CompletionPieChart";
 import HoursBarChart from "../Dashboard/HoursBarChart";
 import RatingBarChart from "../Dashboard/RatingBarChart";
 import MonthLineChart from "../Dashboard/MonthLineChart";
+import './Dashboard.css';
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -24,9 +25,8 @@ const Dashboard = () => {
     setGames(resGames.data);
   };
 
-  if (!stats) return <p className="text-center text-gray-600">Cargando estadísticas...</p>;
+  if (!stats) return <p className="loading-text">Cargando estadísticas...</p>;
 
-  // Datos para los gráficos
   const genreData = games.reduce((acc, game) => {
     acc[game.genero] = (acc[game.genero] || 0) + 1;
     return acc;
@@ -61,25 +61,25 @@ const Dashboard = () => {
 
   return (
     <motion.div
-      className="grid md:grid-cols-2 gap-6 mt-8"
+      className="dashboard-container"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      {/* Tarjetas Resumen */}
-      <div className="col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <SummaryCard title="Total Juegos" value={stats.totalGames} />
-        <SummaryCard title="Completados" value={stats.completedGames} />
-        <SummaryCard title="Horas Jugadas" value={stats.totalHours} />
-        <SummaryCard title="Promedio Rating" value={stats.avgRating} />
+      <div className="summary-cards">
+        <SummaryCard title="Total Juegos" value={stats.totalGames} icon="🎮" />
+        <SummaryCard title="Completados" value={stats.completedGames} icon="✅" />
+        <SummaryCard title="Horas Jugadas" value={stats.totalHours} icon="⏱" />
+        <SummaryCard title="Promedio Rating" value={stats.avgRating} icon="⭐" />
       </div>
 
-      {/* Gráficos */}
-      <GenrePieChart genreChart={genreChart} />
-      <PlatformBarChart platformChart={platformChart} />
-      <CompletionPieChart completionChart={completionChart} />
-      <HoursBarChart hoursChart={hoursChart} />
-      <RatingBarChart ratingChart={ratingChart} />
-      <MonthLineChart monthChart={monthChart} />
+      <div className="charts-container">
+        <GenrePieChart genreChart={genreChart} />
+        <PlatformBarChart platformChart={platformChart} />
+        <CompletionPieChart completionChart={completionChart} />
+        <HoursBarChart hoursChart={hoursChart} />
+        <RatingBarChart ratingChart={ratingChart} />
+        <MonthLineChart monthChart={monthChart} />
+      </div>
     </motion.div>
   );
 };

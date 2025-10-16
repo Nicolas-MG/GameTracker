@@ -1,8 +1,9 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import './PlatformBarChart.css';
 
 const PlatformBarChart = ({ platformChart }) => (
-  <div className="bg-white rounded-xl shadow-md p-4">
-    <h3 className="text-lg font-bold mb-2">Juegos por Plataforma</h3>
+  <div className="platform-barchart-container">
+    <h3 className="platform-barchart-title">Juegos por Plataforma</h3>
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={platformChart}>
         <CartesianGrid strokeDasharray="3 3" />

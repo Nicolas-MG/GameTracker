@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getReviews, createReview, deleteReview, updateReview } from "../../services/api";
+import './GameDetail.css';
 
 const GameDetail = ({ game, onClose }) => {
   const [reviews, setReviews] = useState([]);
@@ -35,11 +36,9 @@ const GameDetail = ({ game, onClose }) => {
     e.preventDefault();
     try {
       if (editingReview) {
-        // 🔁 Actualizar reseña existente
         await updateReview(editingReview._id, { ...form, fechaActualizacion: new Date() });
         setEditingReview(null);
       } else {
-        // ➕ Crear nueva reseña
         const newReview = {
           ...form,
           juegoId: game._id,
@@ -89,71 +88,68 @@ const GameDetail = ({ game, onClose }) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        className="modal-overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-white rounded-2xl shadow-lg max-w-2xl w-full p-6 relative"
+          className="game-detail-container"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
         >
           {/* Botón cerrar */}
-          <button
-            className="absolute top-3 right-3 text-gray-600 hover:text-black"
-            onClick={onClose}
-          >
+          <button className="close-button" onClick={onClose}>
             ✖
           </button>
 
           {/* Info del juego */}
-          <div className="flex gap-4">
+          <div className="game-info">
             <img
               src={game.imagenPortada}
               alt={game.titulo}
-              className="rounded-lg w-40 h-40 object-cover"
+              className="game-image"
             />
             <div>
-              <h2 className="text-2xl font-bold">{game.titulo}</h2>
-              <p className="text-gray-600">
+              <h2 className="game-title">{game.titulo}</h2>
+              <p className="game-meta">
                 {game.genero} • {game.plataforma}
               </p>
-              <p className="mt-2">{game.descripcion}</p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="game-description">{game.descripcion}</p>
+              <p className="game-developer">
                 Desarrollador: {game.desarrollador}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="game-year">
                 Año: {game.yearLanzamiento}
               </p>
             </div>
           </div>
 
           {/* Reseñas */}
-          <h3 className="text-xl font-bold mt-6">Reseñas</h3>
-          <div className="space-y-3 mt-2 max-h-56 overflow-y-auto pr-2">
+          <h3 className="reviews-title">Reseñas</h3>
+          <div className="reviews-container">
             {reviews.length > 0 ? (
               reviews.map((rev) => (
                 <motion.div
                   key={rev._id}
-                  className="border rounded-lg p-3 bg-gray-50 relative"
+                  className="review-card"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                 >
                   {/* Botones */}
-                  <div className="absolute top-2 right-2 flex gap-2">
+                  <div className="review-buttons">
                     <button
                       onClick={() => handleEdit(rev)}
-                      className="text-blue-500 hover:text-blue-700"
+                      className="edit-button"
                       title="Editar reseña"
                     >
                       ✏️
                     </button>
                     <button
                       onClick={() => handleDelete(rev._id)}
-                      className="text-red-500 hover:text-red-700"
+                      className="delete-button"
                       title="Eliminar reseña"
                     >
                       🗑️
@@ -161,26 +157,26 @@ const GameDetail = ({ game, onClose }) => {
                   </div>
 
                   {/* Info */}
-                  <p className="font-semibold">
+                  <p className="review-info">
                     ⭐ {rev.puntuacion} - {rev.dificultad} ({rev.horasJugadas}h)
                   </p>
-                  <p className="text-gray-700">{rev.textoReview}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="review-text">{rev.textoReview}</p>
+                  <p className="review-recommendation">
                     {rev.recomendaria ? "✅ Recomendado" : "❌ No recomendado"}
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="review-date">
                     {new Date(rev.fechaCreacion).toLocaleString()}
                   </p>
                 </motion.div>
               ))
             ) : (
-              <p className="text-gray-500">Aún no hay reseñas</p>
+              <p className="no-reviews">Aún no hay reseñas</p>
             )}
           </div>
 
           {/* Formulario de crear/editar */}
-          <form onSubmit={handleSubmit} className="mt-6 space-y-3">
-            <h4 className="font-semibold">
+          <form onSubmit={handleSubmit} className="review-form">
+            <h4 className="form-title">
               {editingReview ? "✏️ Editar reseña" : "📝 Nueva reseña"}
             </h4>
 
@@ -189,18 +185,18 @@ const GameDetail = ({ game, onClose }) => {
               placeholder="Escribe tu reseña..."
               value={form.textoReview}
               onChange={handleChange}
-              className="w-full border rounded-lg p-2"
+              className="review-textarea"
               required
             />
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="form-fields">
               <div>
-                <label className="block text-sm text-gray-600">Puntuación</label>
+                <label className="form-label">Puntuación</label>
                 <select
                   name="puntuacion"
                   value={form.puntuacion}
                   onChange={handleChange}
-                  className="w-full border rounded-lg p-2"
+                  className="form-select"
                 >
                   {[1, 2, 3, 4, 5].map((n) => (
                     <option key={n} value={n}>
@@ -211,27 +207,27 @@ const GameDetail = ({ game, onClose }) => {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-600">Horas jugadas</label>
+                <label className="form-label">Horas jugadas</label>
                 <input
                   type="number"
                   name="horasJugadas"
                   value={form.horasJugadas}
                   onChange={handleChange}
                   placeholder="Ej: 60"
-                  className="w-full border rounded-lg p-2"
+                  className="form-input"
                   required
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="form-fields">
               <div>
-                <label className="block text-sm text-gray-600">Dificultad</label>
+                <label className="form-label">Dificultad</label>
                 <select
                   name="dificultad"
                   value={form.dificultad}
                   onChange={handleChange}
-                  className="w-full border rounded-lg p-2"
+                  className="form-select"
                 >
                   {["Fácil", "Normal", "Difícil"].map((dif) => (
                     <option key={dif} value={dif}>
@@ -241,25 +237,21 @@ const GameDetail = ({ game, onClose }) => {
                 </select>
               </div>
 
-              <div className="flex items-center gap-2 mt-5">
+              <div className="checkbox-container">
                 <input
                   type="checkbox"
                   name="recomendaria"
                   checked={form.recomendaria}
                   onChange={handleChange}
-                  className="w-4 h-4"
+                  className="checkbox"
                 />
-                <label className="text-sm text-gray-600">
-                  Recomendaría este juego
-                </label>
+                <label className="checkbox-label">Recomendaría este juego</label>
               </div>
             </div>
 
             <button
               type="submit"
-              className={`w-full ${
-                editingReview ? "bg-emerald-500 hover:bg-emerald-600" : "bg-blue-500 hover:bg-blue-600"
-              } text-white py-2 px-4 rounded-lg transition-all`}
+              className={`submit-button ${editingReview ? "editing" : "new"}`}
             >
               {editingReview ? "Guardar cambios" : "Enviar reseña"}
             </button>

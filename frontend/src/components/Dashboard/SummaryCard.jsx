@@ -1,7 +1,10 @@
-const SummaryCard = ({ title, value }) => (
-  <div className="bg-white rounded-xl shadow-md p-4 text-center">
-    <h3 className="text-2xl font-bold">{value}</h3>
-    <p className="text-gray-500">{title}</p>
+import './SummaryCard.css';
+
+const SummaryCard = ({ title, value, icon }) => (
+  <div className="summary-card">
+    <div className="summary-card-icon">{icon}</div>
+    <h3 className="summary-card-value">{value}</h3>
+    <p className="summary-card-title">{title}</p>
   </div>
 );
 

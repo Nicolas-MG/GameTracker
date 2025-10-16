@@ -1,15 +1,17 @@
+import './Filters.css';
+
 const Filters = ({ filters, setFilters }) => {
   const handleChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="flex flex-wrap gap-4 mb-6 bg-white shadow-md p-4 rounded-2xl">
+    <div className="filters-container">
       <select
         name="genero"
         value={filters.genero}
         onChange={handleChange}
-        className="border p-2 rounded-lg"
+        className="filter-select"
       >
         <option value="">Todos los géneros</option>
         <option value="Acción">Acción</option>
@@ -23,7 +25,7 @@ const Filters = ({ filters, setFilters }) => {
         name="plataforma"
         value={filters.plataforma}
         onChange={handleChange}
-        className="border p-2 rounded-lg"
+        className="filter-select"
       >
         <option value="">Todas las plataformas</option>
         <option value="PC">PC</option>
@@ -36,7 +38,7 @@ const Filters = ({ filters, setFilters }) => {
         name="completado"
         value={filters.completado}
         onChange={handleChange}
-        className="border p-2 rounded-lg"
+        className="filter-select"
       >
         <option value="">Todos</option>
         <option value="true">Completados</option>
