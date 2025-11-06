@@ -7,7 +7,7 @@ import PlatformBarChart from "../Dashboard/PlatformBarChart";
 import CompletionPieChart from "../Dashboard/CompletionPieChart";
 import HoursBarChart from "../Dashboard/HoursBarChart";
 import RatingBarChart from "../Dashboard/RatingBarChart";
-import MonthLineChart from "../Dashboard/MonthLineChart";
+import DayLineChart from "./DayLineChart";
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -54,10 +54,12 @@ const Dashboard = () => {
     value: parseFloat(stats.ratingByGenre[g]),
   }));
 
-  const monthChart = Object.keys(stats.gamesByMonth || {}).map((m) => ({
-    name: m,
-    value: stats.gamesByMonth[m],
-  }));
+
+  const dayChart = Object.keys(stats.gamesByDay || {}).map((d) => ({
+    name: d,
+    value: stats.gamesByDay[d]
+  })); 
+  
 
   return (
     <motion.div
@@ -78,7 +80,7 @@ const Dashboard = () => {
         <CompletionPieChart completionChart={completionChart} />
         <HoursBarChart hoursChart={hoursChart} />
         <RatingBarChart ratingChart={ratingChart} />
-        <MonthLineChart monthChart={monthChart} />
+        <DayLineChart dayChart={dayChart} />
       </div>
     </motion.div>
   );

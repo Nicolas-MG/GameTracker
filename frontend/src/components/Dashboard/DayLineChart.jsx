@@ -1,11 +1,11 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import './MonthLineChart.css';
+import './DayLineChart.css';
 
-const MonthLineChart = ({ monthChart }) => (
+const DayLineChart = ({ dayChart }) => (
   <div className="month-linechart-container">
-    <h3 className="month-linechart-title">Juegos Agregados por Mes</h3>
+    <h3 className="month-linechart-title">Juegos Agregados por Dia</h3>
     <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={monthChart}>
+      <LineChart data={dayChart}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis allowDecimals={false} />
@@ -16,4 +16,4 @@ const MonthLineChart = ({ monthChart }) => (
   </div>
 );
 
-export default MonthLineChart;
+export default DayLineChart;

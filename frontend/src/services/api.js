@@ -42,7 +42,7 @@ export const deleteReview = async (id) => {
 };
 
 
-// Stats
+// Stats ( Estadisticas )
 export const getStats = () => API.get("/stats");
 
 

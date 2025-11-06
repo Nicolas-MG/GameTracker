@@ -255,3 +255,34 @@ input[type="checkbox"]:checked::after {
     padding: 14px;
   }
 }
+
+.dropzone-container {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.dropzone-container p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.preview-image {
+  margin-top: 10px;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+option {
+  background-color: #578fc4;
+  color: #fffdfd; 
+  padding: 10px; 
+  font-size: 16px; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+  border-radius: 10px;
+}
+
