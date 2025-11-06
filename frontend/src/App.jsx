@@ -1,61 +1,49 @@
-import { useState } from "react";
-import GameList from "./components/Game/GameList";
-import GameForm from "./components/Game/GameForm";
-import Dashboard from "./components/Dashboard/Dashboard";
+import { Link, useLocation } from "react-router-dom";
+import Router from "./Router";
 
-function App() {
-  const [view, setView] = useState("games");
-  const [games, setGames] = useState([]);
-
-  const handleAddGame = (newGame) => {
-    setGames([...games, newGame]);
-    setView("games");
-  };
+export default function App() {
+  const location = useLocation();
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <header className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">🎮 GameTracker</h1>
+        <Link to="/" className="text-3xl font-bold hover:text-blue-600 transition-colors">
+          🎮 GameTracker
+        </Link>
 
-        <nav className="space-x-4">
-          <button
-            onClick={() => setView("games")}
-            className={`px-4 py-2 rounded-lg ${
-              view === "games" ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-          >
-            Juegos
-          </button>
-
-          <button
-            onClick={() => setView("dashboard")}
-            className={`px-4 py-2 rounded-lg ${
-              view === "dashboard" ? "bg-blue-500 text-white" : "bg-gray-200"
+        <nav className="space-x-4 flex items-center">
+          <Link 
+            to="/dashboard" 
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              location.pathname === '/dashboard' 
+                ? 'bg-blue-500 text-white' 
+                : 'hover:bg-gray-100'
             }`}
           >
             Dashboard
-          </button>
-
-          {/* Con este botón se abre el formulario */}
-          <button
-            onClick={() => setView("addGame")}
-            className={`px-4 py-2 rounded-lg ${
-              view === "addGame" ? "bg-green-500 text-white" : "bg-gray-200"
+          </Link>
+          <Link 
+            to="/games" 
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              location.pathname === '/games' 
+                ? 'bg-blue-500 text-white' 
+                : 'hover:bg-gray-100'
             }`}
           >
-            ➕ Agregar Juego
-          </button>
+            Games
+          </Link>
+          <Link 
+            to="/games/new" 
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Add Game
+          </Link>
         </nav>
       </header>
 
-      {/* Aca Renderizamos las vistas */}
-      {view === "games" && <GameList games={games} />}
-      {view === "dashboard" && <Dashboard />}
-      {view === "addGame" && (
-        <GameForm onSave={handleAddGame} onCancel={() => setView("games")} />
-      )}
+      <main className="mt-8">
+        <Router />
+      </main>
     </div>
   );
 }
-
-export default App;
