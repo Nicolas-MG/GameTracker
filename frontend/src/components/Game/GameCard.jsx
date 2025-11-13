@@ -9,10 +9,12 @@ const GameCard = ({ game, onToggle, onSelect, onEdit, onDelete }) => {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -8 }}
       className={styles['game-card']}
+      
     >
       {/* Imagen con badge de estado superpuesto */}
-      <div className={styles['game-image-container']} onClick={onSelect}>
+      <div className={styles['game-image-container']} >
         <img
+          onClick={onSelect}
           src={game.imagenPortada}
           alt={game.titulo}
           className={styles['game-image']}

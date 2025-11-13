@@ -92,3 +92,26 @@
 .close-button:hover {
   color: #000000;
 }
+
+.dropzone-container {
+  border: 2px dashed #ccc;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  margin: 12px 0;
+  border-radius: 8px;
+}
+
+.dropzone-container p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.preview-image {
+  margin-top: 10px;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
