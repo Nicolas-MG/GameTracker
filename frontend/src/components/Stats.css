@@ -19,11 +19,19 @@
   text-align: center;
 }
 
+body.dark .stats-card {
+  background-color: #1f2937;
+}
+
 
 .stats-card h3 {
   font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 8px;
+}
+
+body.dark .stats-card h3 {
+  color: #e5e7eb;
 }
 
 
@@ -32,13 +40,25 @@
   font-size: 0.875rem;
 }
 
+body.dark .stats-card p {
+  color: #9ca3af;
+}
+
 
 .loading-text {
   color: #6b7280; 
   font-size: 1rem;
 }
 
+body.dark .loading-text {
+  color: #9ca3af;
+}
+
 .error-text {
   color: #ef4444;
   font-size: 1rem;
+}
+
+body.dark .error-text {
+  color: #fca5a5;
 }

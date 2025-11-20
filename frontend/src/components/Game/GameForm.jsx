@@ -28,7 +28,8 @@ const GameForm = ({ onGameAdded }) => {
 
   const handleYearChange = (e) => {
     const digits = e.target.value.replace(/\D/g, "");
-    setForm({ ...form, yearLanzamiento: digits });
+    const limitedDigits = digits.slice(0, 4);
+    setForm({ ...form, yearLanzamiento: limitedDigits });
   };
 
   const handleDrop = (acceptedFiles) => {

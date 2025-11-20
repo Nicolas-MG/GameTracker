@@ -15,6 +15,11 @@ body {
   color: #1a1a1a;
 }
 
+body.dark {
+  background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%);
+  color: #e5e7eb;
+}
+
 .app-container {
   padding: 32px 24px;
   max-width: 1400px;
@@ -38,6 +43,12 @@ body {
   top: 24px;
   z-index: 100;
   transition: all 0.3s ease;
+}
+
+body.dark .header {
+  background: rgba(17, 24, 39, 0.85);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 .header:hover {
@@ -67,6 +78,11 @@ body {
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
+body.dark .nav {
+  background: #111827;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
 .nav a,
 .nav .nav-button {
   padding: 12px 24px;
@@ -81,6 +97,16 @@ body {
   letter-spacing: 0.3px;
   text-decoration: none; /* Importante para links */
   display: inline-block; /* Para que el padding funcione bien */
+}
+
+.theme-toggle {
+  background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+  color: #fff;
+}
+
+.theme-toggle:hover {
+  box-shadow: 0 6px 20px rgba(55, 65, 81, 0.5);
+  transform: translateY(-3px);
 }
 
 .nav a::before,
@@ -130,6 +156,19 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+body.dark .nav a.bg-gray,
+body.dark .nav .bg-gray {
+  background: #1f2937;
+  color: #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .nav a.bg-gray:hover,
+body.dark .nav .bg-gray:hover {
+  background: #374151;
+  color: #fff;
+}
+
 .nav a.bg-gray:hover,
 .nav .bg-gray:hover {
   background: #2b97df;
@@ -162,6 +201,12 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.3);
   animation: fadeIn 0.5s ease;
+}
+
+body.dark .view-container {
+  background: rgba(17, 24, 39, 0.85);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes fadeIn {
